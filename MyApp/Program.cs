@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using MyApp.Data;
 
@@ -10,7 +11,22 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 // Agregar servicios MVC
 builder.Services.AddControllersWithViews();
 
+// Redirige a la pagina Login cuando no es autorizado
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/User/Login";
+        options.AccessDeniedPath = "/User/AccessDenied";
+    });
+
+
+// Agregagar sesion
+builder.Services.AddSession();
+
 var app = builder.Build();
+
+// Usar sesion
+app.UseSession();
 
 // Middleware de manejo de excepciones
 if (!app.Environment.IsDevelopment())

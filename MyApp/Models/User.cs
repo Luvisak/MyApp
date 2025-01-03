@@ -13,7 +13,7 @@ namespace MyApp.Models
         [Required(ErrorMessage = "Email is required")]
         [EmailAddress(ErrorMessage = "Invalid email format")]
         public string? Email { get; set; }
-
+        public string PasswordHash { get; set; } // Almacenará contraseñas cifradas
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     }
 }
