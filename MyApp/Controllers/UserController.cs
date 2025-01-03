@@ -16,8 +16,17 @@ namespace MyApp.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var users = await _context.Users.ToListAsync();
-            return View(users);
+            try
+            {
+                var users = await _context.Users.ToListAsync();
+                return View(users);
+            }
+            catch (Exception ex)
+            {
+                // Log the error
+                Console.WriteLine($"Error: {ex.Message}");
+                return View("Error");
+            }
         }
 
         public IActionResult Create()
